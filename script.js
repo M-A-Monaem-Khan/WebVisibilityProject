@@ -39,7 +39,6 @@ function changeImage() {
 setInterval(changeImage, 5000);
 
 function checkBtnVisibility(){
-    console.log("cureent index - "+currentIndex);
     if(currentIndex == 0){
         var d = document.getElementById('prevbtn');
         d.style.display = 'none';
@@ -74,14 +73,29 @@ function prevClick() {
 }
 
 function CardView(){
+    if(card.length > 0){
+        document.getElementById('cardId').style.display = '';
+    }
     var text = '';
     card.forEach(v=>{
         text = text + `<div class="card-body">
                 <h2 class="card-title">${v.cardTitle}</h2>
                 <p class="card-text">${v.cardHead}</p>
-                <button class="card-btn">Learn More</button>
+                <button onclick="learnMoreClick('${v.cardTitle}','${v.cardBody}')" class="card-btn">Read More</button>
             </div>`;
     })
 
-    document.getElementById('card').innerHTML = text;
+    document.getElementById('cardId').innerHTML = text;
+}
+
+function closePopupClick(){
+    document.getElementById('popupTitle').innerText = '';
+    document.getElementById('popupBody').innerText = '';
+    document.getElementById('overlay').style.display = 'none';
+}
+
+function learnMoreClick(title,text){
+    document.getElementById('popupTitle').innerText = title;
+    document.getElementById('popupBody').innerText = text;
+    document.getElementById('overlay').style.display = 'block';
 }

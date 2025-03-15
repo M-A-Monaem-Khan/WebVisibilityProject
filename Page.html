@@ -10,9 +10,9 @@
 <body>
     <div class="overlay" id="overlay">
         <div class="popup">
-            <button class="close-btn" id="closeBtn">&times;</button>
-            <h2>Popup Modal</h2>
-            <p>This is a simple popup window.</p>
+            <button onclick="closePopupClick()" class="close-btn" id="closeBtn">&times;</button>
+            <h2 id="popupTitle">Popup Modal</h2>
+            <p id="popupBody">This is a simple popup window.</p>
         </div>
     </div>
 
@@ -25,11 +25,20 @@
     </div>
 
     <div>
-        <div id="card" class="card">
+        <div id="cardId" class="card" style="display:  ;">
             <div class="card-body">
-                <h2 class="card-title">Card Title</h2>
-                <p class="card-text">This is a simple description of the card. You can add more information here.</p>
-                <button class="card-btn">Learn More</button>
+                <h2 class="card-title">${v.cardTitle}</h2>
+                <p class="card-text">${v.cardHead}</p>
+                <button onclick="learnMoreClick('${v.cardTitle}','${v.cardBody}')" class="card-btn">Read More</button>
+            </div>
+
+            <div style="flex: 0 0 100%; display: flex; justify-content: space-around;">
+                <div>
+                    <p style="color: blue; cursor: pointer;"> >> Previous >> </p>
+                </div>
+                <div>
+                    <p style="color: blue; cursor: pointer;"> >> Next >> </p>
+                </div>
             </div>
         </div>
     </div>
