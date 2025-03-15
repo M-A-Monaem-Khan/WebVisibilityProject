@@ -1,6 +1,15 @@
 var images = [];
 var card = [];
 var currentIndex = 0;
+var currentCardIndex = 0;
+var cardLast = `<div style="flex: 0 0 100%; display: flex; justify-content: space-around;">
+                <div>
+                    <p id="prevCardbtn" onclick="prevCardView()" style="color: blue; cursor: pointer;"> >> Previous >> </p>
+                </div>
+                <div>
+                    <p id="nextCardbtn" onclick="nextCardView()" style="color: blue; cursor: pointer;"> >> Next >> </p>
+                </div>
+            </div>`;
 
 window.onload = function() {
     // Fetch JSON content from a file
@@ -77,15 +86,52 @@ function CardView(){
         document.getElementById('cardId').style.display = '';
     }
     var text = '';
-    card.forEach(v=>{
+    
         text = text + `<div class="card-body">
-                <h2 class="card-title">${v.cardTitle}</h2>
-                <p class="card-text">${v.cardHead}</p>
-                <button onclick="learnMoreClick('${v.cardTitle}','${v.cardBody}')" class="card-btn">Read More</button>
+                <h2 class="card-title">${card[0].cardTitle}</h2>
+                <p class="card-text">${card[0].cardHead}</p>
+                <button onclick="learnMoreClick(${currentCardIndex})" class="card-btn">Read More</button>
             </div>`;
-    })
+    document.getElementById('cardId').innerHTML = text+cardLast;
+    showhidCardbtn();
+}
 
-    document.getElementById('cardId').innerHTML = text;
+function prevCardView(){
+    currentCardIndex = currentCardIndex-1;
+    var text = '';
+        text = text + `<div class="card-body">
+                <h2 class="card-title">${card[currentCardIndex].cardTitle}</h2>
+                <p class="card-text">${card[currentCardIndex].cardHead}</p>
+                <button onclick="learnMoreClick(${currentCardIndex})" class="card-btn">Read More</button>
+            </div>`;
+    document.getElementById('cardId').innerHTML = text+cardLast;
+    showhidCardbtn();
+}
+
+function nextCardView(){
+    currentCardIndex = currentCardIndex+1;
+    var text = '';
+        text = text + `<div class="card-body">
+                <h2 class="card-title">${card[currentCardIndex].cardTitle}</h2>
+                <p class="card-text">${card[currentCardIndex].cardHead}</p>
+                <button onclick="learnMoreClick(${currentCardIndex})" class="card-btn">Read More</button>
+            </div>`;
+    document.getElementById('cardId').innerHTML = text+cardLast;
+    showhidCardbtn();
+}
+
+function showhidCardbtn(){
+    if(currentCardIndex == card.length-1){
+        document.getElementById('nextCardbtn').style.display = 'none';
+    }else{
+        document.getElementById('nextCardbtn').style.display = '';
+    }
+
+    if(currentCardIndex == 0){
+        document.getElementById('prevCardbtn').style.display = 'none';
+    }else{
+        document.getElementById('prevCardbtn').style.display = '';
+    }
 }
 
 function closePopupClick(){
@@ -94,8 +140,8 @@ function closePopupClick(){
     document.getElementById('overlay').style.display = 'none';
 }
 
-function learnMoreClick(title,text){
-    document.getElementById('popupTitle').innerText = title;
-    document.getElementById('popupBody').innerText = text;
+function learnMoreClick(index){
+    document.getElementById('popupTitle').innerText = card[index].cardTitle;
+    document.getElementById('popupBody').innerText = card[index].cardBody;
     document.getElementById('overlay').style.display = 'block';
 }
