@@ -45,7 +45,7 @@ function changeImage() {
     
 }
 
-setInterval(changeImage, 5000);
+setInterval(changeImage, 3000);
 
 function checkBtnVisibility(){
     if(currentIndex == 0){
