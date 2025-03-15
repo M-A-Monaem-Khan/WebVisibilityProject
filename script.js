@@ -1,4 +1,5 @@
 var images = [];
+var card = [];
 var currentIndex = 0;
 
 window.onload = function() {
@@ -6,9 +7,18 @@ window.onload = function() {
     fetch('https://raw.githubusercontent.com/M-A-Monaem-Khan/WebVisibilityProject/refs/heads/main/DataFile/ImageList.json')
         .then(response => response.json())  // Convert the response to JSON
         .then(data => {
-            console.log(data); // Log the data            
             images = data;            
             checkBtnVisibility();
+        })
+        .catch(error => {
+            console.error('Error reading the JSON file:', error);
+        });
+
+        fetch('https://raw.githubusercontent.com/M-A-Monaem-Khan/WebVisibilityProject/refs/heads/main/DataFile/cardData.json')
+        .then(response => response.json())  // Convert the response to JSON
+        .then(data => {           
+            card = data;
+            CardView();
         })
         .catch(error => {
             console.error('Error reading the JSON file:', error);
@@ -61,4 +71,17 @@ function prevClick() {
     checkBtnVisibility();
     var img = document.getElementById('myImage');
     img.src = './Images/'+images[currentIndex].imageName;
+}
+
+function CardView(){
+    var text = '';
+    card.forEach(v=>{
+        text = text + `<div class="card-body">
+                <h2 class="card-title">${v.cardTitle}</h2>
+                <p class="card-text">${v.cardHead}</p>
+                <button class="card-btn">Learn More</button>
+            </div>`;
+    })
+
+    document.getElementById('card').innerHTML = text;
 }
